@@ -1,10 +1,10 @@
-export function selectionSort(arr: Array<number>): number[] {
+export function selectionSort(arr: Array<number>): Array<number> {
     if (arr.length < 2) {
         return arr;
     }
 
     let temp = 0;
-    let slice: number[] | null = null;
+    let slice: Array<number> | null = null;
     let minIdx = -1;
     for (let i = 0; i < arr.length; i++) {
         // find the smallest index
