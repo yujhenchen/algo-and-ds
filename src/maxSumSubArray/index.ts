@@ -3,20 +3,17 @@ export function getMaxSumSubArray(arr: Array<number>): number {
     let tempSum = 0;
     let maxSum = 0;
     for (let num of arr) {
-        if (num <= 0) {
-            if (tempSum > maxSum) {
-                maxSum = tempSum;
-            }
-            tempSum = 0;
-        }
-        else {
+        if (num > 0) {
             tempSum += num;
         }
-        // console.log(tempSum);
-    }
+        else {
+            tempSum = 0;
+        }
 
-    if (tempSum > maxSum) {
-        maxSum = tempSum;
+        if (tempSum > maxSum) {
+            maxSum = tempSum;
+        }
+        // console.log(tempSum);
     }
     return maxSum;
 }
