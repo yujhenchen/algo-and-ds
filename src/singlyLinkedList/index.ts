@@ -35,10 +35,6 @@ export class SinglyLinkedList {
     return this;
   }
 
-  // public traverse(){
-
-  // }
-
   public pop(): ListNode | null {
     // if head === null, return this
     // else
@@ -65,5 +61,19 @@ export class SinglyLinkedList {
       this.head = null;
     }
     return curr;
+  }
+  public shift(): ListNode | null {
+    // if there is no node, return null
+    // else, if head has next first = head, head = head.next, return first
+    if (!this.head) {
+      return null;
+    }
+    let first = this.head;
+    this.head = this.head.next;
+    this.length--;
+    if (this.length === 0) {
+      this.tail = null;
+    }
+    return first;
   }
 }
