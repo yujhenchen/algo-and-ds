@@ -100,4 +100,46 @@ describe('SinglyLinkedList', () => {
         expect(list.tail).toBeNull();
         expect(list.length).toBe(0);
     });
+
+    test('unshift: should add a node to an empty list and set head and tail to the new node', () => {
+        const list = new SinglyLinkedList();
+        list.unshift(10);
+
+        expect(list.head?.val).toBe(10);
+        expect(list.tail?.val).toBe(10);
+        expect(list.length).toBe(1);
+    });
+
+    test('unshift: should add a node to the beginning of a non-empty list', () => {
+        const list = new SinglyLinkedList();
+        list.unshift(20);
+        list.unshift(10);
+
+        expect(list.head?.val).toBe(10);
+        expect(list.head?.next?.val).toBe(20);
+        expect(list.tail?.val).toBe(20);
+        expect(list.length).toBe(2);
+    });
+
+    test('unshift: should correctly update head and maintain tail in a multi-node list', () => {
+        const list = new SinglyLinkedList();
+        list.unshift(30);
+        list.unshift(20);
+        list.unshift(10);
+
+        expect(list.head?.val).toBe(10);
+        expect(list.head?.next?.val).toBe(20);
+        expect(list.head?.next?.next?.val).toBe(30);
+        expect(list.tail?.val).toBe(30);
+        expect(list.length).toBe(3);
+    });
+
+    test('unshift: should allow chaining and return the list instance', () => {
+        const list = new SinglyLinkedList();
+        const returnedList = list.unshift(10).unshift(20).unshift(30);
+
+        expect(returnedList).toBe(list);
+        expect(list.head?.val).toBe(30);
+        expect(list.length).toBe(3);
+    });
 });

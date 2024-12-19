@@ -76,4 +76,21 @@ export class SinglyLinkedList {
     }
     return first;
   }
+
+  public unshift(val: number): this {
+    // if head is null, head = newNode ,tail = newNode, length++, return this
+    // else, currentHead = head, head = newNode, newNode.next = currentHead, length++, return this
+    const newNode = new ListNode(val);
+    if (!this.head) {
+      this.head = newNode;
+      this.tail = newNode;
+    }
+    else {
+      const currentHead = this.head;
+      this.head = newNode;
+      this.head.next = currentHead;
+    }
+    this.length++;
+    return this;
+  }
 }
