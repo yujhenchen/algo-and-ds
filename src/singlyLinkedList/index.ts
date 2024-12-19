@@ -7,7 +7,7 @@ class ListNode {
   }
 }
 
-class SinglyLinkedList {
+export class SinglyLinkedList {
   head: ListNode | null;
   tail: ListNode | null;
   length: number;
@@ -33,5 +33,37 @@ class SinglyLinkedList {
     }
     this.length++;
     return this;
+  }
+
+  // public traverse(){
+
+  // }
+
+  public pop(): ListNode | null {
+    // if head === null, return this
+    // else
+    // , current = head, if current has next, prev = current, current = current.next
+    // prev.next = null, length--
+
+    if (!this.head) {
+      return null;
+    }
+    let prev: ListNode | null = null;
+    let curr = this.head;
+    while (curr.next) {
+      prev = curr;
+      curr = curr.next;
+    }
+    if (prev) {
+      prev.next = null;
+    }
+    this.tail = prev;
+    this.length--;
+
+    // NOTE: when the list is empty, head = null
+    if (this.length === 0) {
+      this.head = null;
+    }
+    return curr;
   }
 }
