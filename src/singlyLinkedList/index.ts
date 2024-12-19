@@ -82,14 +82,12 @@ export class SinglyLinkedList {
     // else, currentHead = head, head = newNode, newNode.next = currentHead, length++, return this
     const newNode = new ListNode(val);
     if (!this.head) {
-      this.head = newNode;
       this.tail = newNode;
     }
     else {
-      const currentHead = this.head;
-      this.head = newNode;
-      this.head.next = currentHead;
+      newNode.next = this.head;
     }
+    this.head = newNode;
     this.length++;
     return this;
   }
