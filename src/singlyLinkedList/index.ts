@@ -117,4 +117,31 @@ export class SinglyLinkedList {
     return false;
   }
 
+
+  public insert(index: number, val: number): this {
+    // if index is < 0 or > length, return this
+    // if index === 0, unshift
+    // if index === length, push
+    // else, get the node before the index as prevNode,
+    // next = prevNode.next, prevNode.next = new node, new node next = next
+    if (index < 0 || index > this.length) {
+      return this;
+    }
+    if (index === 0) {
+      return this.unshift(val);
+    }
+    if (index === this.length) {
+      return this.push(val);
+    }
+    let prevNode: ListNode | null = this.get(index - 1);
+    let nextNode: ListNode | null = prevNode?.next ?? null;
+    const newNode = new ListNode(val);
+    if (prevNode) {
+      prevNode.next = newNode;
+      newNode.next = nextNode;
+      this.length++;
+    }
+    return this;
+  }
+
 }

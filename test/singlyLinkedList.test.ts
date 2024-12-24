@@ -239,4 +239,73 @@ describe('SinglyLinkedList', () => {
         expect(emptyListSet).toBe(false); // Should return false as the list is empty
     });
 
+    test('insert: should insert a value at the specified index in the list', () => {
+        const list = new SinglyLinkedList();
+        list.push(10);
+        list.push(20);
+        list.push(30);
+
+        // Insert at the beginning (index 0)
+        list.insert(0, 5);
+        expect(list.get(0)?.val).toBe(5); // Value at index 0 should be 5
+        expect(list.length).toBe(4); // Length should increase by 1
+
+        // Insert in the middle (index 2)
+        list.insert(2, 15);
+        expect(list.get(2)?.val).toBe(15); // Value at index 2 should be 15
+        expect(list.get(3)?.val).toBe(20); // Value at index 3 should shift to 20
+        expect(list.length).toBe(5); // Length should increase by 1
+
+        // Insert at the end (index equal to length)
+        list.insert(list.length, 35);
+        expect(list.get(list.length - 1)?.val).toBe(35); // Last value should be 35
+        expect(list.length).toBe(6); // Length should increase by 1
+    });
+
+    test('insert: should return the list without changes if index is out of bounds', () => {
+        const list = new SinglyLinkedList();
+        list.push(10);
+        list.push(20);
+        list.push(30);
+
+        // Insert at a negative index
+        list.insert(-1, 5);
+        expect(list.length).toBe(3); // Length should remain unchanged
+        expect(list.get(0)?.val).toBe(10); // First value should still be 10
+
+        // Insert at an index greater than the length
+        list.insert(10, 40);
+        expect(list.length).toBe(3); // Length should remain unchanged
+        expect(list.get(list.length - 1)?.val).toBe(30); // Last value should still be 30
+    });
+
+    test('insert: should handle insertion in an empty list', () => {
+        const list = new SinglyLinkedList();
+
+        // Insert at index 0 in an empty list
+        list.insert(0, 10);
+        expect(list.get(0)?.val).toBe(10); // Value at index 0 should be 10
+        expect(list.length).toBe(1); // Length should be 1
+    });
+
+    test('insert: should correctly call unshift when index is 0', () => {
+        const list = new SinglyLinkedList();
+        const unshiftSpy = jest.spyOn(list, 'unshift');
+
+        list.insert(0, 10);
+        expect(unshiftSpy).toHaveBeenCalledWith(10); // Ensure unshift is called
+        unshiftSpy.mockRestore();
+    });
+
+    test('insert: should correctly call push when index is equal to length', () => {
+        const list = new SinglyLinkedList();
+        list.push(10);
+        const pushSpy = jest.spyOn(list, 'push');
+
+        list.insert(list.length, 20);
+        expect(pushSpy).toHaveBeenCalledWith(20); // Ensure push is called
+        pushSpy.mockRestore();
+    });
+
+
 });
