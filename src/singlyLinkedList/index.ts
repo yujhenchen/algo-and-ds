@@ -110,10 +110,11 @@ export class SinglyLinkedList {
     // if node is null, return false
     // else, update the value of the node, return true
     const node = this.get(index);
-    if (!node) {
-      return false;
+    if (node) {
+      node.val = val;
+      return true;
     }
-    node.val = val;
-    return true;
+    return false;
   }
+
 }
