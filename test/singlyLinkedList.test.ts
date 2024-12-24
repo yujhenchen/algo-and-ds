@@ -191,5 +191,52 @@ describe('SinglyLinkedList', () => {
         expect(emptyListNegativeIndex).toBeNull();
     });
 
+    test('set: should update the value of the node at the specified index', () => {
+        const list = new SinglyLinkedList();
+        list.push(10);
+        list.push(20);
+        list.push(30);
+
+        // Test updating the value at index 1
+        const updateIndex1 = list.set(1, 25);
+        expect(updateIndex1).toBe(true); // Should return true
+        expect(list.get(1)?.val).toBe(25); // The value at index 1 should be updated to 25
+
+        // Test updating the value at index 0
+        const updateIndex0 = list.set(0, 15);
+        expect(updateIndex0).toBe(true); // Should return true
+        expect(list.get(0)?.val).toBe(15); // The value at index 0 should be updated to 15
+
+        // Test updating the value at index 2
+        const updateIndex2 = list.set(2, 35);
+        expect(updateIndex2).toBe(true); // Should return true
+        expect(list.get(2)?.val).toBe(35); // The value at index 2 should be updated to 35
+    });
+
+    test('set: should return false if the index is out of bounds', () => {
+        const list = new SinglyLinkedList();
+        list.push(10);
+        list.push(20);
+        list.push(30);
+
+        // Test with an index less than 0
+        const negativeIndex = list.set(-1, 50);
+        expect(negativeIndex).toBe(false); // Should return false
+
+        // Test with an index equal to the length of the list
+        const outOfBoundsIndex = list.set(3, 50);
+        expect(outOfBoundsIndex).toBe(false); // Should return false
+
+        // Test with an index greater than the length of the list
+        const farOutOfBoundsIndex = list.set(10, 50);
+        expect(farOutOfBoundsIndex).toBe(false); // Should return false
+    });
+
+    test('set: should return false for an empty list', () => {
+        const list = new SinglyLinkedList();
+
+        const emptyListSet = list.set(0, 50);
+        expect(emptyListSet).toBe(false); // Should return false as the list is empty
+    });
 
 });

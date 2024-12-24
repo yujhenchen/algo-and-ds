@@ -104,4 +104,16 @@ export class SinglyLinkedList {
     }
     return current;
   }
+
+  public set(index: number, val: number): boolean {
+    // use get to get the node
+    // if node is null, return false
+    // else, update the value of the node, return true
+    const node = this.get(index);
+    if (!node) {
+      return false;
+    }
+    node.val = val;
+    return true;
+  }
 }
