@@ -142,4 +142,54 @@ describe('SinglyLinkedList', () => {
         expect(list.head?.val).toBe(30);
         expect(list.length).toBe(3);
     });
+
+    test('get: should return the node at the specified index', () => {
+        const list = new SinglyLinkedList();
+        list.push(10);
+        list.push(20);
+        list.push(30);
+
+        // Test getting the node at index 0
+        const nodeAtIndex0 = list.get(0);
+        expect(nodeAtIndex0?.val).toBe(10);
+
+        // Test getting the node at index 1
+        const nodeAtIndex1 = list.get(1);
+        expect(nodeAtIndex1?.val).toBe(20);
+
+        // Test getting the node at index 2
+        const nodeAtIndex2 = list.get(2);
+        expect(nodeAtIndex2?.val).toBe(30);
+    });
+
+    test('get: should return null if index is out of bounds', () => {
+        const list = new SinglyLinkedList();
+        list.push(10);
+        list.push(20);
+        list.push(30);
+
+        // Test negative index
+        const negativeIndex = list.get(-1);
+        expect(negativeIndex).toBeNull();
+
+        // Test index equal to length
+        const outOfBoundsIndex = list.get(3);
+        expect(outOfBoundsIndex).toBeNull();
+
+        // Test index greater than length
+        const farOutOfBoundsIndex = list.get(10);
+        expect(farOutOfBoundsIndex).toBeNull();
+    });
+
+    test('get: should return null for an empty list', () => {
+        const list = new SinglyLinkedList();
+
+        const emptyListIndex0 = list.get(0);
+        expect(emptyListIndex0).toBeNull();
+
+        const emptyListNegativeIndex = list.get(-1);
+        expect(emptyListNegativeIndex).toBeNull();
+    });
+
+
 });

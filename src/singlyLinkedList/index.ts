@@ -91,4 +91,17 @@ export class SinglyLinkedList {
     this.length++;
     return this;
   }
+
+  public get(index: number): ListNode | null {
+    // if index > length, return null
+    // else, current = current.next, return current
+    if (!this.head || index >= this.length || index < 0) {
+      return null;
+    }
+    let current: ListNode | null = this.head;
+    for (let i = 0; i < index; i++) {
+      current = current?.next ?? null;
+    }
+    return current;
+  }
 }
