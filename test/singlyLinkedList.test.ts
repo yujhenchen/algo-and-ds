@@ -415,4 +415,83 @@ describe('SinglyLinkedList', () => {
             expect(list.get(0)).toBeNull();
         });
     });
+
+    describe('reverse', () => {
+        test('reverse: should handle reversing an empty list', () => {
+            const list = new SinglyLinkedList();
+
+            // Reverse the empty list
+            list.reverse();
+
+            // Check that the list is still empty
+            expect(list.head).toBeNull();
+            expect(list.tail).toBeNull();
+            expect(list.length).toBe(0);
+        });
+
+        test('reverse: should handle reversing a list with one node', () => {
+            const list = new SinglyLinkedList();
+            list.push(10);
+
+            // Reverse the list
+            list.reverse();
+
+            // Check that the single node remains unchanged
+            expect(list.head?.val).toBe(10);
+            expect(list.tail?.val).toBe(10);
+            expect(list.head).toBe(list.tail);
+            expect(list.head?.next).toBeNull();
+            expect(list.length).toBe(1);
+        });
+
+        test('reverse: should reverse a list with two nodes', () => {
+            const list = new SinglyLinkedList();
+            list.push(10);
+            list.push(20);
+
+            // Reverse the list
+            list.reverse();
+
+            // Check that the nodes are swapped
+            expect(list.head?.val).toBe(20);
+            expect(list.head?.next?.val).toBe(10);
+            expect(list.tail?.val).toBe(10);
+            expect(list.tail?.next).toBeNull();
+            expect(list.length).toBe(2);
+        });
+
+        test('reverse: should reverse a list with multiple nodes', () => {
+            const list = new SinglyLinkedList();
+            list.push(10);
+            list.push(20);
+            list.push(30);
+            list.push(40);
+
+            // Reverse the list
+            list.reverse();
+
+            // Check that the order of nodes is reversed
+            expect(list.head?.val).toBe(40);
+            expect(list.head?.next?.val).toBe(30);
+            expect(list.head?.next?.next?.val).toBe(20);
+            expect(list.head?.next?.next?.next?.val).toBe(10);
+            expect(list.tail?.val).toBe(10);
+            expect(list.tail?.next).toBeNull();
+            expect(list.length).toBe(4);
+        });
+
+        test('reverse: should return the list itself after reversing', () => {
+            const list = new SinglyLinkedList();
+            list.push(10);
+            list.push(20);
+            list.push(30);
+
+            // Reverse the list
+            const reversedList = list.reverse();
+
+            // Check that the method returns the same list instance
+            expect(reversedList).toBe(list);
+        });
+
+    });
 });

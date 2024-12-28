@@ -168,4 +168,26 @@ export class SinglyLinkedList {
     return foundNode;
   }
 
+  public reverse(): this {
+    if (this.length < 2) {
+      return this;
+    }
+    const newTail = this.head;
+    let current = this.head;
+    let next = current?.next ?? null;
+    let nextNext = next?.next ?? null;
+    while (next) {
+      next.next = current;
+      current = next;
+      next = nextNext;
+      nextNext = nextNext?.next ?? null;
+    }
+    this.head = current;
+    this.tail = newTail;
+    if (this.tail) {
+      this.tail.next = null;
+    }
+    return this;
+  }
+
 }
