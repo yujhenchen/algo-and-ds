@@ -307,5 +307,99 @@ describe('SinglyLinkedList', () => {
         pushSpy.mockRestore();
     });
 
+    // remove
+    test('remove: should return null for an invalid index', () => {
+        const list = new SinglyLinkedList();
+
+        // Add some values to the list
+        list.push(10);
+        list.push(20);
+        list.push(30);
+
+        // Try to remove at an index < 0
+        expect(list.remove(-1)).toBeNull();
+
+        // Try to remove at an index >= length
+        expect(list.remove(3)).toBeNull();
+        expect(list.remove(5)).toBeNull();
+    });
+
+    test('remove: should handle removal at the head of the list', () => {
+        const list = new SinglyLinkedList();
+
+        // Add some values to the list
+        list.push(10);
+        list.push(20);
+        list.push(30);
+
+        // Remove the head (index 0)
+        const removedNode = list.remove(0);
+
+        // Check the returned node
+        expect(removedNode?.val).toBe(10);
+
+        // Check the new head and length
+        expect(list.get(0)?.val).toBe(20);
+        expect(list.length).toBe(2);
+    });
+
+    test('remove: should handle removal at the tail of the list', () => {
+        const list = new SinglyLinkedList();
+
+        // Add some values to the list
+        list.push(10);
+        list.push(20);
+        list.push(30);
+
+        // Remove the tail (index 2)
+        const removedNode = list.remove(2);
+
+        // Check the returned node
+        expect(removedNode?.val).toBe(30);
+
+        // Check the new tail and length
+        expect(list.get(1)?.val).toBe(20);
+        expect(list.length).toBe(2);
+    });
+
+    test('remove: should handle removal at a middle index', () => {
+        const list = new SinglyLinkedList();
+
+        // Add some values to the list
+        list.push(10);
+        list.push(20);
+        list.push(30);
+        list.push(40);
+
+        // Remove a middle node (index 1)
+        const removedNode = list.remove(1);
+
+        // Check the returned node
+        expect(removedNode?.val).toBe(20);
+
+        // Check the updated links
+        expect(list.get(0)?.val).toBe(10);
+        expect(list.get(1)?.val).toBe(30);
+        expect(list.get(2)?.val).toBe(40);
+        expect(list.length).toBe(3);
+    });
+
+    test('remove: should handle removing the only element in the list', () => {
+        const list = new SinglyLinkedList();
+
+        // Add a single value to the list
+        list.push(10);
+
+        // Remove the only element
+        const removedNode = list.remove(0);
+
+        // Check the returned node
+        expect(removedNode?.val).toBe(10);
+
+        // Check that the list is now empty
+        expect(list.length).toBe(0);
+        expect(list.get(0)).toBeNull();
+    });
+
 
 });

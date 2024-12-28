@@ -144,4 +144,28 @@ export class SinglyLinkedList {
     return this;
   }
 
+  public remove(index: number): ListNode | null {
+    // if index is < 0 or > length, return null
+    // if index === 0, shift
+    // if index === length -1, pop
+    // else, prev = get (index -1 ), next = prev.next.next; prev.next = next
+    if (index < 0 || index >= this.length) {
+      return null;
+    }
+    if (index === 0) {
+      return this.shift();
+    }
+    if (index === this.length - 1) {
+      return this.pop();
+    }
+    const prev = this.get(index - 1);
+    const foundNode = prev?.next ?? null;
+    const next = prev?.next?.next ?? null;
+    if (prev && prev.next) {
+      prev.next = next;
+    }
+    this.length--;
+    return foundNode;
+  }
+
 }
