@@ -17,7 +17,7 @@ export class SinglyLinkedList {
     this.length = 0;
   }
 
-  public push(val: number) {
+  public push(val: number): this {
     // create a new node
     // if head is null, head = new node, tail = new node, length++
     // else, tail = new node, length++
