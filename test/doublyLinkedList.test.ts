@@ -42,5 +42,72 @@ describe('DoublyLinkedList', () => {
             expect(result).toBe(list); // The push method should return the same list instance
         });
     });
+
+    describe('pop', () => {
+        let list: DoublyLinkedList;
+
+        beforeEach(() => {
+            list = new DoublyLinkedList();
+        });
+
+        test('should return null when popping from an empty list', () => {
+            const popped = list.pop();
+
+            expect(popped).toBeNull();
+            expect(list.head).toBeNull();
+            expect(list.tail).toBeNull();
+            expect(list.length).toBe(0);
+        });
+
+        test('should remove the only node in the list and update head and tail to null', () => {
+            list.push(10);
+
+            const popped = list.pop();
+
+            expect(popped?.val).toBe(10);
+            expect(list.head).toBeNull();
+            expect(list.tail).toBeNull();
+            expect(list.length).toBe(0);
+        });
+
+        test('should remove the last node in a list with multiple nodes and update tail', () => {
+            list.push(10).push(20).push(30);
+
+            const popped = list.pop();
+
+            expect(popped?.val).toBe(30);
+            expect(list.tail?.val).toBe(20);
+            expect(list.tail?.next).toBeNull();
+            expect(list.length).toBe(2);
+        });
+
+        test('should update tail’s previous pointer correctly after popping', () => {
+            list.push(10).push(20);
+
+            list.pop(); // Removes 20
+
+            expect(list.tail?.val).toBe(10);
+            expect(list.tail?.prev).toBeNull(); // The new tail should have no previous node
+            expect(list.length).toBe(1);
+        });
+
+        test('should handle popping until the list is empty', () => {
+            list.push(10).push(20).push(30);
+
+            list.pop(); // Removes 30
+            expect(list.length).toBe(2);
+            expect(list.tail?.val).toBe(20);
+
+            list.pop(); // Removes 20
+            expect(list.length).toBe(1);
+            expect(list.tail?.val).toBe(10);
+
+            list.pop(); // Removes 10
+            expect(list.length).toBe(0);
+            expect(list.head).toBeNull();
+            expect(list.tail).toBeNull();
+        });
+    });
+
 });
 
