@@ -211,5 +211,107 @@ describe('DoublyLinkedList', () => {
         });
     });
 
+    describe('set', () => {
+        let list: DoublyLinkedList;
+
+        beforeEach(() => {
+            list = new DoublyLinkedList();
+        });
+
+        test('should return false when setting a value at an index out of bounds', () => {
+            expect(list.set(0, 100)).toBe(false);
+        });
+
+        test('should update the value of the node at the specified index', () => {
+            list.push(10);
+            list.push(20);
+            list.push(30);
+
+            const result = list.set(1, 25);
+
+            expect(result).toBe(true);
+            expect(list.get(1)?.val).toBe(25);
+        });
+    });
+
+
+    describe('insert', () => {
+        let list: DoublyLinkedList;
+
+        beforeEach(() => {
+            list = new DoublyLinkedList();
+        });
+
+        test('should return false when inserting at an index out of bounds', () => {
+            expect(list.insert(-1, 100)).toBe(false);
+            expect(list.insert(1, 100)).toBe(false);
+        });
+
+        test('should insert a value at the beginning of the list', () => {
+            list.insert(0, 10);
+
+            expect(list.head?.val).toBe(10);
+            expect(list.tail?.val).toBe(10);
+            expect(list.length).toBe(1);
+        });
+
+        test('should insert a value in the middle of the list', () => {
+            list.push(10);
+            list.push(30);
+
+            list.insert(1, 20);
+
+            expect(list.get(1)?.val).toBe(20);
+            expect(list.length).toBe(3);
+        });
+    });
+
+    describe('remove', () => {
+        let list: DoublyLinkedList;
+
+        beforeEach(() => {
+            list = new DoublyLinkedList();
+        });
+
+        test('should return null when removing at an index out of bounds', () => {
+            expect(list.remove(0)).toBeNull();
+        });
+
+        test('should remove the head node when index is 0', () => {
+            list.push(10);
+            list.push(20);
+
+            const removed = list.remove(0);
+
+            expect(removed?.val).toBe(10);
+            expect(list.head?.val).toBe(20);
+            expect(list.length).toBe(1);
+        });
+
+        test('should remove the tail node when index is the last index', () => {
+            list.push(10);
+            list.push(20);
+
+            const removed = list.remove(1);
+
+            expect(removed?.val).toBe(20);
+            expect(list.tail?.val).toBe(10);
+            expect(list.length).toBe(1);
+        });
+
+        test('should remove a node in the middle of the list', () => {
+            list.push(10);
+            list.push(20);
+            list.push(30);
+
+            const removed = list.remove(1);
+
+            expect(removed?.val).toBe(20);
+            expect(list.get(1)?.val).toBe(30);
+            expect(list.length).toBe(2);
+        });
+    });
+
+
 });
 
