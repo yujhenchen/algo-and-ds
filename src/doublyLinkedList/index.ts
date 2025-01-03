@@ -77,5 +77,44 @@ export class DoublyLinkedList {
         this.length--;
         return node;
     }
+
+    public unshift(val: number): this {
+        const newNode = new ListNode(val);
+        if (this.length === 0) {
+            this.head = newNode;
+            this.tail = newNode;
+        }
+        else {
+            if (this.head) {
+                this.head.prev = newNode;
+            }
+            newNode.next = this.head;
+            this.head = newNode;
+        }
+        this.length++;
+        return this;
+    }
+
+    public get(index: number): ListNode | null {
+        if (this.length === 0 || index >= this.length || index < 0) {
+            return null;
+        }
+
+        let foundNode: ListNode | null = null;
+        if (index <= this.length / 2) {
+            foundNode = this.head;
+            for (let i = 0; i < index; i++) {
+                foundNode = foundNode?.next ?? null;
+            }
+        }
+        else {
+            foundNode = this.tail;
+            for (let i = 0; i < this.length - index - 1; i++) {
+                foundNode = foundNode?.prev ?? null;
+            }
+        }
+        return foundNode;
+    }
+
 }
 

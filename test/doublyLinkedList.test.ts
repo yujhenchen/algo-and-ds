@@ -160,6 +160,56 @@ describe('DoublyLinkedList', () => {
         });
     });
 
+    describe('unshift', () => {
+        let list: DoublyLinkedList;
+
+        beforeEach(() => {
+            list = new DoublyLinkedList();
+        });
+
+        test('should add a node as head and tail when the list is empty', () => {
+            list.unshift(10);
+
+            expect(list.head?.val).toBe(10);
+            expect(list.tail?.val).toBe(10);
+            expect(list.length).toBe(1);
+            expect(list.head).toBe(list.tail);
+        });
+
+        test('should add a node at the beginning of the list when it is not empty', () => {
+            list.unshift(10);
+            list.unshift(20);
+
+            expect(list.head?.val).toBe(20);
+            expect(list.tail?.val).toBe(10);
+            expect(list.length).toBe(2);
+            expect(list.head?.next?.val).toBe(10);
+            expect(list.tail?.prev?.val).toBe(20);
+        });
+    });
+
+    describe('get', () => {
+        let list: DoublyLinkedList;
+
+        beforeEach(() => {
+            list = new DoublyLinkedList();
+        });
+
+        test('should return null when getting an index out of bounds', () => {
+            expect(list.get(0)).toBeNull();
+            expect(list.get(-1)).toBeNull();
+        });
+
+        test('should return the node at the specified index', () => {
+            list.push(10);
+            list.push(20);
+            list.push(30);
+
+            expect(list.get(0)?.val).toBe(10);
+            expect(list.get(1)?.val).toBe(20);
+            expect(list.get(2)?.val).toBe(30);
+        });
+    });
 
 });
 
