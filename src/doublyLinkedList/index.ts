@@ -163,8 +163,8 @@ export class DoublyLinkedList {
         if (index === this.length - 1) {
             return this.pop();
         }
-        const prev = this.get(index - 1);
-        const current = prev?.next ?? null;
+        const current = this.get(index);
+        const prev = current?.prev ?? null;
         const next = current?.next ?? null;
         if (prev) {
             prev.next = next;
