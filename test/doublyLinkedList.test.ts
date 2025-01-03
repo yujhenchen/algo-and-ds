@@ -109,5 +109,57 @@ describe('DoublyLinkedList', () => {
         });
     });
 
+    describe('shift', () => {
+        let list: DoublyLinkedList;
+
+        beforeEach(() => {
+            list = new DoublyLinkedList();
+        });
+
+        test('should return null when shifting from an empty list', () => {
+            const shifted = list.shift();
+
+            expect(shifted).toBeNull();
+            expect(list.head).toBeNull();
+            expect(list.tail).toBeNull();
+            expect(list.length).toBe(0);
+        });
+
+        test('should remove the head and update the list when it has one node', () => {
+            list.push(10);
+
+            const shifted = list.shift();
+
+            expect(shifted?.val).toBe(10); // Value of the removed node
+            expect(list.head).toBeNull();
+            expect(list.tail).toBeNull();
+            expect(list.length).toBe(0);
+        });
+
+        test('should remove the head and update the head pointer when it has multiple nodes', () => {
+            list.push(10);
+            list.push(20);
+            list.push(30);
+
+            const shifted = list.shift();
+
+            expect(shifted?.val).toBe(10); // Value of the removed node
+            expect(list.head?.val).toBe(20); // New head
+            expect(list.tail?.val).toBe(30); // Tail remains unchanged
+            expect(list.length).toBe(2);
+        });
+
+        test('should correctly update the prev pointer of the new head', () => {
+            list.push(10);
+            list.push(20);
+
+            list.shift();
+
+            expect(list.head?.val).toBe(20); // New head
+            expect(list.head?.prev).toBeNull(); // New head's prev should be null
+        });
+    });
+
+
 });
 

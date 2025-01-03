@@ -57,5 +57,25 @@ export class DoublyLinkedList {
         this.length--;
         return node;
     }
+
+    public shift(): ListNode | null {
+        if (this.length === 0) {
+            return null;
+        }
+        const node = this.head;
+        if (this.length === 1) {
+            this.head = null;
+            this.tail = null;
+        }
+        else {
+            const next = node?.next;
+            if (next) {
+                next.prev = null;
+                this.head = next;
+            }
+        }
+        this.length--;
+        return node;
+    }
 }
 
