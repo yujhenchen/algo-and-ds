@@ -16,6 +16,10 @@
 // , every node to the left of a parent node is always less than the parent
 // , every node to the right of a parent node is always greater than the parent
 
+// Binary Search Tree Big O 
+// insert: O(log n)
+// find: O(log n)
+
 class BSTNode {
 	value: number;
 	left: null | BSTNode;
