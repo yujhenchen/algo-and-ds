@@ -37,40 +37,40 @@ describe("BinarySearchTree", () => {
 		expect(bst.find(1)).toBeFalsy();
 	});
 
-	// test("should delete a leaf node", () => {
-	// 	bst.insert(10);
-	// 	bst.insert(5);
-	// 	bst.insert(15);
+	test("should remove a leaf node", () => {
+		bst.insert(10);
+		bst.insert(5);
+		bst.insert(15);
 
-	// 	bst.delete(5);
+		bst.remove(5);
 
-	// 	expect(bst.find(5)).toBeFalsy();
-	// 	expect(bst.root?.left).toBeNull();
-	// });
+		expect(bst.find(5)).toBeFalsy();
+		expect(bst.root?.left).toBeNull();
+	});
 
-	// test("should delete a node with one child", () => {
-	// 	bst.insert(10);
-	// 	bst.insert(5);
-	// 	bst.insert(3); // Left child of 5
+	test("should remove a node with one child", () => {
+		bst.insert(10);
+		bst.insert(5);
+		bst.insert(3); // Left child of 5
 
-	// 	bst.delete(5);
+		bst.remove(5);
 
-	// 	expect(bst.find(5)).toBeFalsy();
-	// 	expect(bst.root?.left?.value).toBe(3);
-	// });
+		expect(bst.find(5)).toBeFalsy();
+		expect(bst.root?.left?.value).toBe(3);
+	});
 
-	// test("should delete a node with two children", () => {
-	// 	bst.insert(10);
-	// 	bst.insert(5);
-	// 	bst.insert(15);
-	// 	bst.insert(12);
-	// 	bst.insert(17);
+	test("should remove a node with two children", () => {
+		bst.insert(10);
+		bst.insert(5);
+		bst.insert(15);
+		bst.insert(12);
+		bst.insert(17);
 
-	// 	bst.delete(15);
+		bst.remove(15);
 
-	// 	expect(bst.find(15)).toBeFalsy();
-	// 	expect(bst.root?.right?.value).toBe(17); // Successor node replaces the deleted node
-	// });
+		expect(bst.find(15)).toBeFalsy();
+		expect(bst.root?.right?.value).toBe(17); // Successor node replaces the deleted node
+	});
 
 	// test("should return in-order traversal correctly", () => {
 	// 	bst.insert(10);

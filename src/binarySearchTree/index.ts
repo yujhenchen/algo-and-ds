@@ -79,5 +79,122 @@ export class BinarySearchTree {
 	public find(value: number): BSTNode | null {
 		return this.findNode(this.root, value);
 	}
+
+	public remove(value: number): void {
+		// NOTE: first attempt, not good solution
+		// if (!this.root) {
+		// 	return this;
+		// }
+
+		// const getBinarySearchTreeByNodes = (nodes: Array<BSTNode>): BinarySearchTree => {
+		// 	const values: Array<number> = [];
+
+		// 	function getNodeValue(node: BSTNode | null): void {
+		// 		if (!node) {
+		// 			return;
+		// 		}
+		// 		values.push(node.value);
+		// 		getNodeValue(node.left);
+		// 		getNodeValue(node.right);
+		// 	}
+
+		// 	for (let node of nodes) {
+		// 		getNodeValue(node);
+		// 	}
+
+		// 	const bst = new BinarySearchTree();
+		// 	for (let i = 0; i < values.length; i++) {
+		// 		bst.insert(values[i]);
+		// 	}
+		// 	return bst;
+		// }
+
+		// let parent: BSTNode = this.root;
+		// let current: BSTNode | null = this.root;
+		// const Side = {
+		// 	LEFT: "LEFT",
+		// 	RIGHT: "RIGHT"
+		// } as const;
+		// let side: keyof typeof Side = Side.LEFT;
+
+
+		// while (true) {
+		// 	if (!current || current.value === value) {
+		// 		break;
+		// 	}
+		// 	if (value > current.value) {
+		// 		side = Side.RIGHT;
+		// 		parent = current;
+		// 		current = current.right;
+		// 	}
+		// 	else {
+		// 		side = Side.LEFT;
+		// 		parent = current;
+		// 		current = current.left;
+		// 	}
+		// }
+
+		// if (current) {
+		// 	if (side === Side.LEFT) {
+		// 		parent.left = getBinarySearchTreeByNodes([current.left, current.right].filter(node => node !== null)).root;
+		// 	}
+		// 	else {
+		// 		parent.right = getBinarySearchTreeByNodes([current.left, current.right].filter(node => node !== null)).root;
+		// 	}
+		// }
+		// return this;
+		this.root = this.removeNode(this.root, value);
+	}
+
+	// NOTE: interesting challenge, need to review again
+	private removeNode(current: BSTNode | null, value: number): BSTNode | null {
+		if (!current) {
+			return null;
+		}
+		if (value < current.value) {
+			current.left = this.removeNode(current.left, value);
+		}
+		else if (value > current.value) {
+			current.right = this.removeNode(current.right, value);
+		}
+		else {
+			// case 1: no child node
+			if (!current.left && !current.right) {
+				return null;
+			}
+			// case 2: 1 child node
+			if (!current.left) {
+				return current.right;
+			}
+			if (!current.right) {
+				return current.left;
+			}
+			// case 3: 2 child node
+			// method1: inorder successor: the smallest node in the right subtree
+			const inorderSuccessor = this.findMin(current.right);
+			current.value = inorderSuccessor.value;
+			current.right = this.removeNode(current.right, inorderSuccessor.value);
+
+			// method2: inorder predecessor: the largest node in the left subtree
+			// const inorderPredecessor = this.findMax(current.left);
+			// current.value = inorderPredecessor.value;
+			// current.left = this.removeNode(current.left, inorderPredecessor.value);
+		}
+		return current;
+	}
+
+	private findMin(node: BSTNode): BSTNode {
+		while (node.left) {
+			node = node.left;
+		}
+		return node;
+	}
+
+	private findMax(node: BSTNode): BSTNode {
+		while (node.right) {
+			node = node.right;
+		}
+		return node;
+	}
 }
 
