@@ -20,7 +20,7 @@
 // insert: O(log n)
 // find: O(log n)
 
-class BSTNode {
+export class BSTNode {
 	value: number;
 	left: null | BSTNode;
 	right: null | BSTNode;
@@ -229,6 +229,57 @@ export class BinarySearchTree {
 			}
 			visitedNodes.push(current);
 		}
+		return visitedNodes;
+	}
+
+	public preorderDFS(): Array<BSTNode> {
+		if (!this.root) {
+			return [];
+		}
+		const visitedNodes: Array<BSTNode> = [];
+		const traversal = (current: BSTNode): void => {
+			// === another approach ===
+			// if (!current) {
+			// 	return;
+			// }
+			// visitedNodes.push(current);
+			// traversal(current.left);
+			// traversal(current.right);
+
+			visitedNodes.push(current);
+			if (current.left) traversal(current.left);
+			if (current.right) traversal(current.right);
+		}
+		traversal(this.root);
+		return visitedNodes;
+	}
+
+	// root node is the last to be visited
+	public postOrderDFS(): Array<BSTNode> {
+		if (!this.root) {
+			return [];
+		}
+		const visitedNodes: Array<BSTNode> = [];
+		const traversal = (current: BSTNode): void => {
+			if (current.left) {
+				traversal(current.left);
+			}
+			if (current.right) {
+				traversal(current.right);
+			}
+			visitedNodes.push(current);
+		}
+		traversal(this.root);
+		return visitedNodes;
+	}
+
+	public firstInOrderDFS(): Array<BSTNode> {
+		if (!this.root) {
+			return [];
+		}
+		const visitedNodes: Array<BSTNode> = [];
+		const traversal = (current: BSTNode): void => { }
+		traversal(this.root);
 		return visitedNodes;
 	}
 }

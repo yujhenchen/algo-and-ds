@@ -1,4 +1,4 @@
-import { BinarySearchTree } from "../src/binarySearchTree";
+import { BinarySearchTree, BSTNode } from "../src/binarySearchTree";
 
 describe("BinarySearchTree", () => {
 
@@ -99,4 +99,97 @@ describe("BinarySearchTree", () => {
 
 		expect(bfsResult).toEqual([10, 5, 15, 3, 7, 12, 17]); // Expected level-order traversal
 	});
+
+	test("should return correct preorder traversal", () => {
+		const bst = new BinarySearchTree();
+
+		bst.insert(10);
+		bst.insert(5);
+		bst.insert(15);
+		bst.insert(3);
+		bst.insert(7);
+		bst.insert(12);
+		bst.insert(18);
+
+		// Preorder: Root -> Left -> Right
+		const preorderResult = bst.preorderDFS().map(node => node.value);
+		expect(preorderResult).toEqual([10, 5, 3, 7, 15, 12, 18]);
+	});
+
+	test("should return an empty array if tree is empty", () => {
+		const bst = new BinarySearchTree();
+		expect(bst.preorderDFS()).toEqual([]);
+	});
+
+	test("should return only root if there's a single node", () => {
+		const bst = new BinarySearchTree();
+		bst.insert(10);
+		const preorderResult = bst.preorderDFS().map(node => node.value);
+		expect(preorderResult).toEqual([10]);
+	});
+
+
+
+	describe("BinarySearchTree - Postorder DFS", () => {
+		let bst: BinarySearchTree;
+
+		beforeEach(() => {
+			bst = new BinarySearchTree();
+		});
+
+		test("should return nodes in postorder for a balanced BST", () => {
+			bst.insert(10);
+			bst.insert(5);
+			bst.insert(15);
+			bst.insert(2);
+			bst.insert(7);
+			bst.insert(12);
+			bst.insert(17);
+
+			const result = bst.postOrderDFS();
+
+			expect(result.map(node => node.value)).toEqual([2, 7, 5, 12, 17, 15, 10]); // Left → Right → Root
+			expect(result.every(node => node instanceof BSTNode)).toBeTruthy();
+		});
+
+		test("should return nodes in postorder for a left-skewed BST", () => {
+			bst.insert(10);
+			bst.insert(8);
+			bst.insert(6);
+			bst.insert(4);
+			bst.insert(2);
+
+			const result = bst.postOrderDFS();
+
+			expect(result.map(node => node.value)).toEqual([2, 4, 6, 8, 10]);
+			expect(result.every(node => node instanceof BSTNode)).toBeTruthy();
+		});
+
+		test("should return nodes in postorder for a right-skewed BST", () => {
+			bst.insert(5);
+			bst.insert(10);
+			bst.insert(15);
+			bst.insert(20);
+			bst.insert(25);
+
+			const result = bst.postOrderDFS();
+
+			expect(result.map(node => node.value)).toEqual([25, 20, 15, 10, 5]);
+			expect(result.every(node => node instanceof BSTNode)).toBeTruthy();
+		});
+
+		test("should return an empty array for an empty BST", () => {
+			expect(bst.postOrderDFS()).toEqual([]);
+		});
+
+		test("should return a single node for a BST with only root", () => {
+			bst.insert(42);
+
+			const result = bst.postOrderDFS();
+
+			expect(result.map(node => node.value)).toEqual([42]);
+			expect(result.every(node => node instanceof BSTNode)).toBeTruthy();
+		});
+	});
+
 });
