@@ -83,4 +83,20 @@ describe("BinarySearchTree", () => {
 
 	// 	expect(bst.inOrderTraversal()).toEqual([3, 5, 7, 10, 12, 15, 18]);
 	// });
+
+	test("should return nodes in level-order using BFS", () => {
+		const bst = new BinarySearchTree();
+
+		bst.insert(10);
+		bst.insert(5);
+		bst.insert(15);
+		bst.insert(12);
+		bst.insert(17);
+		bst.insert(3);
+		bst.insert(7);
+
+		const bfsResult = bst.BFS().map(node => node.value);
+
+		expect(bfsResult).toEqual([10, 5, 15, 3, 7, 12, 17]); // Expected level-order traversal
+	});
 });

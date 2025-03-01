@@ -196,5 +196,40 @@ export class BinarySearchTree {
 		}
 		return node;
 	}
+
+	/**
+	 * BFS Requires a Queue (FIFO)
+	 * Breadth-first search of a binary search tree
+	 * @returns an array of BSTNode objects in order of visitation
+	 */
+	public BFS(): Array<BSTNode> {
+		// return [] if root is null
+
+		// === while loop solution ===
+		// queue = [root], visited = []
+		// while queue is not empty
+		// current = queue.shift(), if current has left, queue.push(left), if current has right, queue.push(right)
+		// visited.push(current)
+		if (this.root === null) {
+			return [];
+		}
+		const queueNodes: Array<BSTNode> = [this.root];
+		const visitedNodes: Array<BSTNode> = [];
+		let current: BSTNode | undefined;
+		while (queueNodes.length > 0) {
+			current = queueNodes.shift();
+			if (!current) {
+				break;
+			}
+			if (current.left) {
+				queueNodes.push(current.left);
+			}
+			if (current.right) {
+				queueNodes.push(current.right);
+			}
+			visitedNodes.push(current);
+		}
+		return visitedNodes;
+	}
 }
 
