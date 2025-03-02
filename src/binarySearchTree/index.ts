@@ -278,7 +278,15 @@ export class BinarySearchTree {
 			return [];
 		}
 		const visitedNodes: Array<BSTNode> = [];
-		const traversal = (current: BSTNode): void => { }
+		const traversal = (current: BSTNode): void => {
+			if (current.left) {
+				traversal(current.left);
+			}
+			visitedNodes.push(current);
+			if (current.right) {
+				traversal(current.right);
+			}
+		}
 		traversal(this.root);
 		return visitedNodes;
 	}

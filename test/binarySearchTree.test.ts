@@ -192,4 +192,68 @@ describe("BinarySearchTree", () => {
 		});
 	});
 
+
+	describe("BinarySearchTree - Inorder DFS", () => {
+		let bst: BinarySearchTree;
+
+		beforeEach(() => {
+			bst = new BinarySearchTree();
+		});
+
+		test("should return nodes in inorder for a balanced BST", () => {
+			bst.insert(10);
+			bst.insert(5);
+			bst.insert(15);
+			bst.insert(2);
+			bst.insert(7);
+			bst.insert(12);
+			bst.insert(17);
+
+			const result = bst.firstInOrderDFS();
+
+			expect(result.map(node => node.value)).toEqual([2, 5, 7, 10, 12, 15, 17]); // Left → Root → Right
+			expect(result.every(node => node instanceof BSTNode)).toBeTruthy();
+		});
+
+		test("should return nodes in inorder for a left-skewed BST", () => {
+			bst.insert(10);
+			bst.insert(8);
+			bst.insert(6);
+			bst.insert(4);
+			bst.insert(2);
+
+			const result = bst.firstInOrderDFS();
+
+			expect(result.map(node => node.value)).toEqual([2, 4, 6, 8, 10]); // Already sorted (Left → Root → Right)
+			expect(result.every(node => node instanceof BSTNode)).toBeTruthy();
+		});
+
+		test("should return nodes in inorder for a right-skewed BST", () => {
+			bst.insert(5);
+			bst.insert(10);
+			bst.insert(15);
+			bst.insert(20);
+			bst.insert(25);
+
+			const result = bst.firstInOrderDFS();
+
+			expect(result.map(node => node.value)).toEqual([5, 10, 15, 20, 25]); // Already sorted (Left → Root → Right)
+			expect(result.every(node => node instanceof BSTNode)).toBeTruthy();
+		});
+
+		test("should return an empty array for an empty BST", () => {
+			expect(bst.firstInOrderDFS()).toEqual([]);
+		});
+
+		test("should return a single node for a BST with only root", () => {
+			bst.insert(42);
+
+			const result = bst.firstInOrderDFS();
+
+			expect(result.map(node => node.value)).toEqual([42]);
+			expect(result.every(node => node instanceof BSTNode)).toBeTruthy();
+		});
+	});
+
+
 });
