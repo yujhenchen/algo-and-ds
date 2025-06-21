@@ -130,7 +130,65 @@ describe('graph traversal', () => {
 
 
 	describe('BFS', () => {
+		it('should return a single vertex if only one node exists', () => {
+			graph.addVertex('A');
+			expect(graph.BFS('A')).toEqual(['A']);
+		});
 
+		it('should perform BFS on a connected graph', () => {
+			graph.addVertex('A');
+			graph.addVertex('B');
+			graph.addVertex('C');
+			graph.addVertex('D');
+
+			graph.addEdge('A', 'B');
+			graph.addEdge('A', 'C');
+			graph.addEdge('B', 'D');
+
+			const result = graph.BFS('A');
+			expect(result).toContain('A');
+			expect(result).toContain('B');
+			expect(result).toContain('C');
+			expect(result).toContain('D');
+			expect(result.length).toBe(4);
+
+			// Optional: Check BFS-specific traversal order
+			expect(result[0]).toBe('A');
+		});
+
+		it('should not revisit nodes in a cyclic graph', () => {
+			graph.addVertex('A');
+			graph.addVertex('B');
+			graph.addVertex('C');
+
+			graph.addEdge('A', 'B');
+			graph.addEdge('B', 'C');
+			graph.addEdge('C', 'A'); // cycle
+
+			const result = graph.BFS('A');
+			expect(new Set(result)).toEqual(new Set(['A', 'B', 'C']));
+			expect(result.length).toBe(3);
+		});
+
+		it('should return only reachable nodes in a disconnected graph', () => {
+			graph.addVertex('A');
+			graph.addVertex('B');
+			graph.addVertex('C'); // not connected
+
+			graph.addEdge('A', 'B');
+
+			const result = graph.BFS('A');
+			expect(result).toEqual(expect.arrayContaining(['A', 'B']));
+			expect(result).not.toContain('C');
+			expect(result.length).toBe(2);
+		});
+
+		it('should throw an error or return empty if the vertex does not exist', () => {
+			// expect(() => graph.BFS('Z')).toThrow();
+			// or if implementation returns empty array:
+			expect(graph.BFS('Z')).toEqual([]);
+		});
 	});
+
 
 });
