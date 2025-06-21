@@ -76,4 +76,57 @@ export class Graph {
 		traverse(vertex);
 		return result;
 	}
+
+	public DFS_iterative(vertex: string): Array<string> {
+		if (!this.adjacencyList[vertex]) {
+			return [];
+		}
+
+		// NOTE: my approach 1st
+		// const stack: Array<string> = [];
+		// const visitedSet: Set<string> = new Set();
+		// // const results: Array<string> = [];
+		// let current = vertex;
+		// let neighbors: Array<string> = [];
+
+		// stack.push(current);
+		// visitedSet.add(current);
+
+		// while (stack.length) {
+		// 	neighbors = this.adjacencyList[current];
+		// 	for (let neighbor of neighbors) {
+		// 		if (!visitedSet.has(neighbor)) {
+		// 			stack.push(neighbor);
+		// 			visitedSet.add(neighbor);
+		// 		}
+		// 	}
+		// 	stack.shift();
+		// 	current = stack[0];
+		// }
+
+		// NOTE: AI approach, stack is last in first out
+		const stack: Array<string> = [vertex];
+		const visitedSet: Set<string> = new Set([vertex]);
+		const result: Array<string> = [];
+
+		let current: string | undefined = undefined;
+		let neighbors: Array<string> = [];
+
+		while (stack.length) {
+			current = stack.pop();
+			if (current) {
+				result.push(current);
+
+				neighbors = this.adjacencyList[current];
+				for (let neighbor of neighbors.slice().reverse()) {
+					if (!visitedSet.has(neighbor)) {
+						stack.push(neighbor);
+						visitedSet.add(neighbor);
+					}
+				}
+			}
+		}
+
+		return Array.from(visitedSet);
+	}
 }
