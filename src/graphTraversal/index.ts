@@ -129,4 +129,33 @@ export class Graph {
 
 		return Array.from(visitedSet);
 	}
+
+	public BFS(vertex: string): Array<string> {
+		if (!this.adjacencyList[vertex]) {
+			return [];
+		}
+
+		const queue: Array<string> = [vertex];
+		const visitedSet: Set<string> = new Set([vertex]);
+		const result: Array<string> = [];
+
+		let current: string | undefined = undefined;
+		let neighbors: Array<string> = [];
+
+		while (queue.length) {
+			current = queue.shift();
+			if (current) {
+				result.push(current);
+
+				neighbors = this.adjacencyList[current];
+				for (let neighbor of neighbors) {
+					if (!visitedSet.has(neighbor)) {
+						queue.push(neighbor);
+						visitedSet.add(neighbor);
+					}
+				}
+			}
+		}
+		return result;
+	}
 }
